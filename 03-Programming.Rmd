@@ -1,11 +1,64 @@
 # In-Class Programming Activity, Day 3
 
-Your work goes here ...
+##Name: Melissa Leong
+##Date: 3/02/2017
+
+#### Task 1 
+```{r}
+library(ISLR)
+data("College",package="ISLR")
+````
+
+#### Task 2
+```{r}
+College$Yield<- (College$Enroll)/(College$Accept) #Task 2
+College$Yield
+```
+
+#### Task 3
+```{r}
+all_indices<-c(1:nrow(College))
+all_indices
+
+train_indices<-sample(1:nrow(College),size=200)
+train_indices
+
+test_indices<-setdiff(all_indices, train_indices)
+test_indices
+
+dim(College)
+Train_data<-data.frame(College[train_indices,1:19])
+Train_data
+
+Test_data<-data.frame(College[test_indices,1:19])
+Test_data
+```
+
+#### Task 4
+```{r}
+Yield_mod1<-lm(Yield~Top10perc+Outstate+Expend,data=Train_data)
+```
+
+#### Task 5
+```{r}
+Y_train<-Train_data$Yield
+fhat_train<-predict(Yield_mod1,newdata = Train_data)
+mod1_sum<-summary(Yield_mod1)
+MSE_train<-mean(mod1_sum$residuals^2)
+```
 
 
+#### Task 6 
+```{r}
+Yield_mod2<-lm(Yield~Top10perc+Outstate+Expend,data=Test_data)
+Y_test<-Test_data$Yield
+fhat_test<-predict(Yield_mod2,newdata = Test_data)
+mod2_sum<-summary(Yield_mod2)
+MSE_test<-mean(mod2_sum$residuals^2)
+MSE_train/MSE_test
+```
 
 ## Test statements
-
 ```{r}
 scoreActivity::score253(3)
 ```

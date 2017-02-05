@@ -1,11 +1,48 @@
 # In-Class Programming Activity, Day 1
-
-Your work goes here ...
-
-
-
-## Test statements
-
+### Melissa Leong 
+### Date: 25/01/2017
+##
+##
+#### Task 1
 ```{r}
-scoreActivity::score253(1)
+
+library("mosaicData")
 ```
+
+#### Task 2 
+```{r}
+task2= paste("Today is", date()) #paste() joins variables together
+task2
+```
+
+#### Task 3
+```{r}
+task3a=names(Galton)
+task3a
+task3b=nrow(Galton)
+task3b
+task3b=mean(Galton$height)
+task3b
+
+```
+
+#### Task 4
+```{r}
+task4=matrix(1:6,nrow=2,ncol=3,byrow=TRUE) #without specifying "byrow=TRUE, matrix() automatically fills by column, not by row"
+task4
+```
+
+#### Task 5 
+```{r}
+task5x=c(runif(1000,min=0,max=1)) ##runif() takes in this sequence: no. of output, min and max) 
+task5y=c(runif(1000,min=0,max=1))
+task5xx<-task5x^2
+task5yy<-task5y^2
+task5xy=task5xx+task5yy
+
+task5sqrt=sqrt(task5xy)
+task5=length(which(task5sqrt<1))/1000
+estimateOfPi=task5*4
+estimateOfPi
+````
+

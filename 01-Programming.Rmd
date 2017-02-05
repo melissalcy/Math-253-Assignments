@@ -5,8 +5,8 @@
 ##
 #### Task 1
 ```{r}
-
 library("mosaicData")
+library("mosaic")
 ```
 
 #### Task 2 
@@ -19,10 +19,12 @@ task2
 ```{r}
 task3a=names(Galton)
 task3a
+
 task3b=nrow(Galton)
-task3b
-task3b=mean(Galton$height)
-task3b
+task3b 
+
+task3c=mean(Galton$height)
+task3c
 
 ```
 
@@ -42,7 +44,12 @@ task5xy=task5xx+task5yy
 
 task5sqrt=sqrt(task5xy)
 task5=length(which(task5sqrt<1))/1000
-estimateOfPi=task5*4
-estimateOfPi
+task5pi=task5*4 
+
+```
+##
+## Test statements
+```{r}
+scoreActivity::score253(1)
 ````
 

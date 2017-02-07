@@ -1,0 +1,30 @@
+---
+title: "Math 253 Class Notes"
+author: "Melissa Leong"
+date: "2/7/2017"
+
+---
+### 7/2/2017 Tuesday 
+######How to plot an F distribution
+```{r}
+x<- rnorm(1000)
+y<- rnorm(1000)
+plot(x,y)
+
+plot(x, df(x,10,2)) # df(x, df1, df2, ncp, log = FALSE)
+plot(x, df(x,10,20))
+plot(x, df(x,10,200))
+```
+
+
+######How to structure function syntax
+```{r}
+#name<-function(argmt1, argmt2)
+melissa_new_function<-function(input){
+  input^2 #I made a function that squared an input 
+  
+}
+melissa_new_function(1)
+melissa_new_function(2)
+melissa_new_function(3)
+```

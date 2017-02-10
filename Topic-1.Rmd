@@ -1,115 +1,279 @@
 # Topic 1 Exercises
-#
+
+
 ###Melissa Leong
 ### 06/02/2017
-####Discussion questions: ISL 2.4.1, 2.4.3, 2.4.6
-#####2.4.1
-```{r eval=FALSE}
-#1. For each of parts (a) through (d), indicate whether we would generally expect the performance of a flexible statistical learning method to be better or worse than an inflexible method. Justify your answer.
-#
-#(a) The sample size n is extremely large, and the number of predictors p is small.
-Better. 
+###Discussion questions: ISL 2.4.1, 2.4.3, 2.4.6
+####2.4.1
+
+**1. For each of parts (a) through (d), indicate whether we would generally expect the performance of a flexible statistical learning method to be better or worse than an inflexible method. Justify your answer.**
+
+**(a) The sample size n is extremely large, and the number of predictors p is small.**  
+Flexible is worse. 
 Firstly- with many observations, the data better represents population.
-Secondly- with few predictors, the relationship is simpler than a complex model.
+Secondly- with few predictors, the relationship is simple. A non-flexible method would work better. 
 
-#(b) The number of predictors p is extremely large, and the number of observations n is small.
-Worse. 
-The large number of predictors and small n makes it a complex model. The model might be overfitted. 
+**(b) The number of predictors p is extremely large, and the number of observations n is small.**  
+Flexible is better. 
+The large number of predictors and small n makes it a complex model. A flexible model would yield more accurate results. However it could risk being un-interpretable and also might be overfitted. 
 
-#(c) The relationship between the predictors and response is highly non-linear.
-Worse. 
+**(c) The relationship between the predictors and response is highly non-linear.**  
+Flexible is better.
 A flexible model would be better in this case as it does not make as many explicit assumptions and has potential to fit a wider range of possible shapes that this non-linear response might represent. 
 
-#(d) The variance of the error terms, i.e. σ2 = Var(), is extremely high.
-Better.
-A more flexible model might get distracted by the noise caused by this high variance and result in overfitting the data 
-```
-
+**(d) The variance of the error terms, i.e. σ2 = Var(), is extremely high.**  
+Flexible is worse.
+A more flexible model might get distracted by the noise caused by this high variance and result in overfitting the data   
+   
+     
+  
 ####2.4.3
-```{r eval=FALSE}
-#3. We now revisit the bias-variance decomposition.
-#(a) Provide a sketch of typical (squared) bias, variance, training error, test error, and Bayes (or irreducible) error curves, on a single plot, as we go from less flexible statistical learning methods towards more flexible approaches. The x-axis should represent the amount of flexibility in the method, and the y-axis should represent the values for each curve. There should be five curves. Make sure to label each one.
+**3. We now revisit the bias-variance decomposition**
+**(a) Provide a sketch of typical (squared) bias, variance, training error, test error, and Bayes (or irreducible) error curves, on a single plot, as we go from less flexible statistical learning methods towards more flexible approaches. The x-axis should represent the amount of flexibility in the method, and the y-axis should represent the values for each curve. There should be five curves. Make sure to label each one.**  
+
+Sketched but not sure how to upload. Please email me for picture/instructions to upload if needed. 
 
 
-#(b) Explain why each of the five curves has the shape displayed in part (a).
-```
+####2.4.6  
 
-####2.4.6
-```{r eval=FALSE}
-#6. Describe the differences between a parametric and a non-parametric statistical learning approach. What are the advantages of a parametric approach to regression or classification (as opposed to a nonparametric approach)? What are its disadvantages?
-A parametric approach assumes a functional form. In other words, it assumes that f is influenced by a set of parameters and the statistician chooses these preconcieved parameters . Unlike the parametric approach, a non-parametric approach does not not use a pre-specified model and instead slects a level of smoothness and fits the data to it. 
+**6. Describe the differences between a parametric and a non-parametric statistical learning approach. **   
+A parametric approach assumes a functional form. In other words, it assumes that f is influenced by a set of parameters and the statistician chooses these preconcieved parameters.   
 
+Unlike the parametric approach, a non-parametric approach does not not use a pre-specified model. It instead selects a level of smoothness and then fits the data to it. 
+
+
+**What are the advantages of a parametric approach to regression or classification (as opposed to a nonparametric approach)? **    
 Advantages of parametric: Does not require as many observations as non-parametric ; Does not risk overfitting the data like the non-parametric method might
+
+**What are its disadvantages?**    
 Disadvantages of parametric: Makes assumptions that are not neccessarily true to population; If training data is far from true population then estimate will be poor. 
+
+###Computing assignment: ISL 2.4.8, 2.4.9.  
+
+####2.4.8  
+**8. This exercise relates to the College data set, which can be found in the file College.csv. It contains a number of variables for 777 different universities and colleges in the US. 
+(a) Use the read.csv() function to read the data into R. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.**
+```{r}  
+library(ISLR)
+data("College",package="ISLR")
+#View(College) #Note that I used the View() function as Prof. Kaplan suggested as the College dataset was sitting in the ISLR package already. 
+
 ```
 
-####Computing assignment: ISL 2.4.8, 2.4.9.
-####2.4.8
-```{r eval=FAlSE}
-#8. This exercise relates to the College data set, which can be found in the file College.csv. It contains a number of variables for 777 different universities and colleges in the US. 
-#(a) Use the read.csv() function to read the data into R. Call the loaded data college. Make sure that you have the directory set to the correct location for the data.
-View(College)
-college<- read.csv(file="college.csv")
-
-#(b) Look at the data using the fix() function. You should notice that the first column is just the name of each university. We don’t really want R to treat this as data. However, it may be handy to have these names for later. Try the following commands:
-fix(College.csv)
-rownames (college )=college [,1]
-fix(college)
-
-#You should see that there is now a row.names column with the name of each university recorded. This means that R has given
-each row a name corresponding to the appropriate university. R will not try to perform calculations on the row names. However, we still need to eliminate the first column in the data where the
-names are stored. Try
-> college =college [,-1]
-> fix(college)
-Now you should see that the first data column is Private. Note
-that another column labeled row.names now appears before the
-Private column. However, this is not a data column but rather
-the name that R is giving to each row.
-
-#(c) i. Use the summary() function to produce a numerical summary of the variables in the data set.
-#ii. Use the pairs() function to produce a scatterplot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using
-A[,1:10].
-#iii. Use the plot() function to produce side-by-side boxplots of Outstate versus Private.
-#iv. Create a new qualitative variable, called Elite, by binning the Top10perc variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10 % of their high school classes exceeds 50 %.
-> Elite=rep("No",nrow(college ))
-> Elite[college$Top10perc >50]=" Yes"
-> Elite=as.factor(Elite)
-> college=data.frame(college , Elite)
-Use the summary() function to see how many elite universities
-there are. Now use the plot() function to produce
-side-by-side boxplots of Outstate versus Elite.
-
-#v. Use the hist() function to produce some histograms with differing numbers of bins for a few of the quantitative variables. 
-
-You may find the command par(mfrow=c(2,2)) useful:
-it will divide the print window into four regions so that four
-plots can be made simultaneously. Modifying the arguments
-to this function will divide the screen in other ways.
-#vi. Continue exploring the data, and provide a brief summary of what you discover.
+**(c) i. Use the summary() function to produce a numerical summary of the variables in the data set.**  
+  
+```{r}
+summary(College) 
 ```
+
+**ii. Use the pairs() function to produce a scatterplot matrix of the first ten columns or variables of the data. Recall that you can reference the first ten columns of a matrix A using: ** 
+```{r}
+pairs(College[,1:10])
+```
+
+**iii. Use the plot() function to produce side-by-side boxplots of Outstate versus Private.**  
+```{r}  
+boxplot(College$Outstate~College$Private, xlab="Private University (Private==Yes)", ylab="Outstate Tuition")
+```
+
+
+**iv. Create a new qualitative variable, called Elite, by binning the Top10perc variable. We are going to divide universities into two groups based on whether or not the proportion of students coming from the top 10 % of their high school classes exceeds 50 %.**  
+
+```{r}
+  
+Elite=rep("No",nrow(College ))
+Elite[College$Top10perc >50]=" Yes"
+Elite=as.factor(Elite)
+College=data.frame(College , Elite)
+
+summary(College)
+
+ 
+boxplot(College$Outstate~College$Elite, xlab="Elite University (Elite==Yes)", ylab="Outstate Tuition")
+```
+
+ 
+**v. Use the hist() function to produce some histograms with differing numbers of bins for a few of the quantitative variables. **  
+  
+```{r}
+hist(College$Accept,border="blue",col="green")
+hist(College$Top25perc, border="purple",col="pink")
+hist(College$Top10perc,border="grey",col="blue")
+```
+
+
+**vi. Continue exploring the data, and provide a brief summary of what you discover** 
+Exploration #1: 
+```{r}
+plot(College$perc.alumni, College$Expend,main="% Alumni Who Donate~ School Expenditure",
+    xlab="% Alumni who Donate", ylab="School Expenditure", pch=19)
+```
+
+There is no clear relationship between school expenditure and % of alumni who donate    
+Exploration #2:
+```{r}
+plot(College$perc.alumni, College$S.F.Ratio,main="% Alumni Who Donate~ School Expenditure",
+    xlab="% Alumni who Donate", ylab="Student Faculty Ratio", pch=19)
+```
+
+There is a slight negative relationship between student-faculty ratio and % alumni who donate. Meaning, the smaller the class room, the more likely it is for an alumni to donate back to the school 
+
+Exploration #3:
+```{r}
+plot(College$perc.alumni, College$PhD,main="% Alumni Who Donate~ %Faculty with PhD",
+    xlab="% Alumni who Donate", ylab="%Faculty with PhD", pch=19)
+```
+
+There is no clear relationship between % of faculty with PhDs and % alumni who donate. 
+
 
 ####2.4.9
-```{r eval=FALSE}
-9. This exercise involves the Auto data set studied in the lab. Make sure
-that the missing values have been removed from the data.
-(a) Which of the predictors are quantitative, and which are qualitative?
-(b) What is the range of each quantitative predictor? You can answer
-this using the range() function. range()
-(c) What is the mean and standard deviation of each quantitative
-predictor?
-(d) Now remove the 10th through 85th observations. What is the
-range, mean, and standard deviation of each predictor in the
-subset of the data that remains?
-(e) Using the full data set, investigate the predictors graphically,
-using scatterplots or other tools of your choice. Create some plots
-highlighting the relationships among the predictors. Comment
-on your findings.
-(f) Suppose that we wish to predict gas mileage (mpg) on the basis
-of the other variables. Do your plots suggest that any of the
-other variables might be useful in predicting mpg? Justify your
-answer.
+***9. This exercise involves the Auto data set studied in the lab. Make sure that the missing values have been removed from the data.***
+```{r}
+#View(Auto)
+```
+**(a) Which of the predictors are quantitative, and which are qualitative?**   
+"Name" is the only quantitative predictor. MPG, cylinder, displacement, horsepower, weight, acceleration, year, origin are quantitative
+
+**(b) What is the range of each quantitative predictor? **
+```{r}
+range(Auto$mpg)
+range(Auto$cylinders)
+range(Auto$displacement)
+range(Auto$horsepower)
+range(Auto$weight)
+range(Auto$acceleration)
+range(Auto$year)
+range(Auto$origin)
+```
+
+**(c) What is the mean and standard deviation of each quantitative predictor?**
+
+```{r}
+mean(Auto$mpg)
+mean(Auto$cylinders)
+mean(Auto$displacement)
+mean(Auto$horsepower)
+mean(Auto$weight)
+mean(Auto$acceleration)
+mean(Auto$year)
+mean(Auto$origin)
+```
+
+#####SD: 
+```{r}
+sd(Auto$mpg)
+sd(Auto$cylinders)
+sd(Auto$displacement)
+sd(Auto$horsepower)
+sd(Auto$weight)
+sd(Auto$acceleration)
+sd(Auto$year)
+sd(Auto$origin)
+```
+
+**(d) Now remove the 10th through 85th observations. **  
+```{r}
+College=College[-c(10:85),]
 ```
 
 
-####Theory assignment: ISL 2.4.2, 2.4.7.
+**What is the range, mean, and standard deviation of each predictor in the subset of the data that remains?**  
+
+
+#####Range
+
+```{r}
+range(Auto$mpg)
+range(Auto$cylinders)
+range(Auto$displacement)
+range(Auto$horsepower)
+range(Auto$weight)
+range(Auto$acceleration)
+range(Auto$year)
+range(Auto$origin)
 ```
+  
+
+#####Mean:
+```{r}
+mean(Auto$mpg)
+mean(Auto$cylinders)
+mean(Auto$displacement)
+mean(Auto$horsepower)
+mean(Auto$weight)
+mean(Auto$acceleration)
+mean(Auto$year)
+mean(Auto$origin)
+```
+
+
+#####SD:
+```{r}
+sd(Auto$mpg)
+sd(Auto$cylinders)
+sd(Auto$displacement)
+sd(Auto$horsepower)
+sd(Auto$weight)
+sd(Auto$acceleration)
+sd(Auto$year)
+sd(Auto$origin)
+```
+
+
+**(e) Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.**
+
+```{r}
+plot(Auto$weight, Auto$mpg, main="Weight~Mpg ", 
+  	xlab="Car Weight ", ylab="Miles Per Gallon ", pch=19)
+```  
+
+  
+This scatterplot suggests that there is a negative relationship between displacement and mpg, that is cars becomes less fuel efficient as they are heavier.
+
+```{r} 
+plot(Auto$displacement, Auto$mpg, main="Displacement~Mpg",
+     xlab="Displacement", ylab="Miles Per Gallon", pch=19)
+```
+
+This scatterplot suggests that there is a negative relationship between weight and mpg, that is cars becomes less fuel efficient as the volume of their cylinders increase(displacement). 
+
+
+**(f) Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer.**
+
+Both these plots show a consistent negative relationship between mpg~weight and mpg~ displacement. They suggest that both weight and displacement would be good variables to include in a model relating to mp but these plots are only desciptive and are non-conclusive of the true effect the variables have on mpg. 
+
+###Theory assignment: ISL 2.4.2, 
+####ISL 2.4.2
+
+**2. Explain whether each scenario is a classification or regression problem,
+and indicate whether we are most interested in inference or prediction.
+Finally, provide n and p.**
+
+**(a) We collect a set of data on the top 500 firms in the US. For each
+firm we record profit, number of employees, industry and the
+CEO salary. We are interested in understanding which factors
+affect CEO salary.**
+
+Regression, Prediction, N=500, p=4  
+
+
+**(b) We are considering launching a new product and wish to know
+whether it will be a success or a failure. We collect data on 20
+similar products that were previously launched. For each product
+we have recorded whether it was a success or failure, price
+charged for the product, marketing budget, competition price,
+and ten other variables.**  
+
+Classification, Inference, N=20, p=14
+
+
+**(c) We are interesting in predicting the % change in the US dollar in
+relation to the weekly changes in the world stock markets. Hence
+we collect weekly data for all of 2012. For each week we record
+the % change in the dollar, the % change in the US market,
+the % change in the British market, and the % change in the
+German market.**
+
+Regression, Prediction, N=52 (There were 52 weeks in 2012), p=4
+

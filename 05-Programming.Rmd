@@ -1,9 +1,66 @@
 # In-Class Programming Activity, Day 5
+### Melissa Leong 
+### Date: 14/02/2017
+##
+####Task 1
+```{r}
+library(mosaicData)
+head(Galton)
+nbins<-10
+```
+####Task 2
+```{r}
+min(Galton$height)
+max(Galton$height)
+evenly_spaced<-c(58,60,62,64,66,68,70,72,74,76,78)
+```
 
-Your work goes here ...
+####Task 3 
+```{r}
+bin_counts<-cut(Galton$height,breaks=evenly_spaced)
+table(bin_counts)
+```
+#### Task 4 
+```{r}
+xL=c(evenly_spaced[1:11])
+xR=c(evenly_spaced[2:12])
+count=c(3,43,123,163,171,149,146,76,17,2,2)
+hist_basics<-data.frame(xL,xR,count)
+```
+####Task 5
+```{r}
+make_one_bar<-function(point){
+  xLeft<-point$xL
+  xRight<-point$xR
+  height<-point$count
+  res<-data.frame(
+    x=c(xLeft,xLeft,xRight,xRight,NA),
+    y=c(0,height,height,0,NA)
+  )
+  res
+}
 
+one_to_five<-function(hist_data) {
+  bars<-NULL
+  for(k in 1:nrow(hist_data)){
+    new_bar<-make_one_bar(hist_data[k,])
+    bars<-rbind(bars,new_bar)
+  }
+  bars
+}
 
+one_to_five(hist_basics)
 
+My_bars<-data.frame(one_to_five(hist_basics))
+head(My_bars)
+```
+
+####Task 6
+```{r}
+plot(My_bars,type="n")
+lines(My_bars)
+polygon(My_bars,col="salmon")
+```
 ## Test statements
 
 ```{r}

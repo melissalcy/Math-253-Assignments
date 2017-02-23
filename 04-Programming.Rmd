@@ -1,9 +1,54 @@
 # In-Class Programming Activity, Day 4
+### Melissa Leong 
+### Date: 14/02/2017
+##
+```{r}
+library(lattice)
+library(ggplot2)
+library(graphics)
+library(plotrix)
+```
+#### Task 1
+```{r}
+plot(1,xlim=c(0,100),ylim=c(0,100),type="n")
+```
+####Task2
+```{r}
+plot(1,xlim=c(0,100),ylim=c(0,100),type="n")
+x1 <- c(100,100,0)
+y1 <- c(0,100,0)
+lines(x1,y1) #lines takes vectors. The one vector should store all the coords of the x axis like x1. The other should store all the coords of the y axis like y1. Lines() matches both of them up 
+plot(1,xlim=c(0,100),ylim=c(0,100),type="n")
+x2<- c(0,100,100,0,0)
+y2<-c(0,0,100,100,0)
+lines(x2,y2)
+```
+####Task3
+```{r}
+plot(1,xlim=c(0,100),ylim=c(0,100),type="n")
+x3<- 50
+y3<-60
+#function takes: draw.circle(xcoordCenter,ycoordCenter,radius,col="blue")
+draw.circle(x3,y3,20)
+```
 
-Your work goes here ...
+####Task 4
+```{r}
+plot(1,xlim=c(0,100),ylim=c(0,100),type="n")
+x4<-50
+y4<-60 
+polygon(x4, y4, angle =abs(sin(10)))
+```
 
+####Task 5
 
-
+```{r}
+plot(1,xlim=c(0,100),ylim=c(0,100),type="n")
+x3<- 50
+y3<-60
+#function takes: draw.circle(xcoordCenter,ycoordCenter,radius,col="blue")
+draw.circle(x3,y3,20,col="salmon",lwd=5)
+```
 ## Test statements
 
 ```{r}

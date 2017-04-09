@@ -11,7 +11,7 @@ nbins<-10
 ####Task 2
 min(Galton$height)
 max(Galton$height)
-evenly_spaced<-c(58,60,62,64,66,68,70,72,74,76,78)
+evenly_spaced<-c(58,60,62,64,66,68,70,72,74,76,78,80)
 
 ####Task 3 
 bin_counts<-cut(Galton$height,breaks=evenly_spaced)

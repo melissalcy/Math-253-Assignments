@@ -119,113 +119,89 @@ $(document).ready(function () {
 </div>
 
 
-<div id="in-class-programming-activity-day-1" class="section level1">
-<h1>In-Class Programming Activity, Day 1</h1>
+<div id="in-class-programming-activity-day-10" class="section level1">
+<h1>In-Class Programming Activity, Day 10</h1>
 <div id="melissa-leong" class="section level3">
 <h3>Melissa Leong</h3>
 </div>
-<div id="date-25012017" class="section level3">
-<h3>Date: 25/01/2017</h3>
-</div>
-<div id="section" class="section level2">
-<h2></h2>
-</div>
-<div id="section-1" class="section level2">
-<h2></h2>
-<div id="task-1" class="section level4">
-<h4>Task 1</h4>
-<pre class="r"><code>library(&quot;mosaicData&quot;)
-library(&quot;mosaic&quot;)</code></pre>
-<pre><code>## Loading required package: dplyr</code></pre>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## 
-## The 'mosaic' package masks several functions from core packages in order to add additional features.  
-## The original behavior of these functions should not be affected by this.</code></pre>
-<pre><code>## 
-## Attaching package: 'mosaic'</code></pre>
-<pre><code>## The following object is masked from 'package:Matrix':
-## 
-##     mean</code></pre>
-<pre><code>## The following objects are masked from 'package:dplyr':
-## 
-##     count, do, tally</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     binom.test, cor, cov, D, fivenum, IQR, median, prop.test,
-##     quantile, sd, t.test, var</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     max, mean, min, prod, range, sample, sum</code></pre>
-</div>
-<div id="task-2" class="section level4">
-<h4>Task 2</h4>
-<pre class="r"><code>task2= paste(&quot;Today is&quot;, date()) #paste() joins variables together
-task2</code></pre>
-<pre><code>## [1] &quot;Today is Mon May  1 21:23:37 2017&quot;</code></pre>
-</div>
-<div id="task-3" class="section level4">
-<h4>Task 3</h4>
-<pre class="r"><code>task3a=names(Galton)
-task3a</code></pre>
-<pre><code>## [1] &quot;family&quot; &quot;father&quot; &quot;mother&quot; &quot;sex&quot;    &quot;height&quot; &quot;nkids&quot;</code></pre>
-<pre class="r"><code>task3b=nrow(Galton)
-task3b </code></pre>
-<pre><code>## [1] 898</code></pre>
-<pre class="r"><code>task3c=mean(Galton$height)
-task3c</code></pre>
-<pre><code>## [1] 66.76069</code></pre>
-</div>
-<div id="task-4" class="section level4">
-<h4>Task 4</h4>
-<pre class="r"><code>task4=matrix(1:6,nrow=2,ncol=3,byrow=TRUE) #without specifying &quot;byrow=TRUE, matrix() automatically fills by column, not by row&quot;
-task4</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    2    3
-## [2,]    4    5    6</code></pre>
-</div>
-<div id="task-5" class="section level4">
-<h4>Task 5</h4>
-<pre class="r"><code>task5x=c(runif(1000,min=0,max=1)) ##runif() takes in this sequence: no. of output, min and max) 
-task5y=c(runif(1000,min=0,max=1))
-task5xx&lt;-task5x^2
-task5yy&lt;-task5y^2
-task5xy=task5xx+task5yy
+<div id="date-09032017" class="section level3">
+<h3>Date: 09/03/2017</h3>
+<pre class="r"><code>library(ISLR)
+library(data.table)
+head(Default)</code></pre>
+<pre><code>##   default student   balance    income
+## 1      No      No  729.5265 44361.625
+## 2      No     Yes  817.1804 12106.135
+## 3      No      No 1073.5492 31767.139
+## 4      No      No  529.2506 35704.494
+## 5      No      No  785.6559 38463.496
+## 6      No     Yes  919.5885  7491.559</code></pre>
+<pre class="r"><code>logistic&lt;- function (x) {
+  logit&lt;- exp(x)/(1+exp(x))
+  logit
+}
 
-task5sqrt=sqrt(task5xy)
-task5=length(which(task5sqrt&lt;1))/1000
-task5pi=task5*4 </code></pre>
-</div>
-</div>
-<div id="section-2" class="section level2">
-<h2></h2>
+names(Default)</code></pre>
+<pre><code>## [1] &quot;default&quot; &quot;student&quot; &quot;balance&quot; &quot;income&quot;</code></pre>
+<pre class="r"><code>linear_combine&lt;-function(data,coefs){
+  result&lt;-0
+  for (nm in names(coefs)) {
+    if(nm==&quot;intercept&quot;) {
+      result&lt;-result+coefs[[nm]]
+    } else {
+      result&lt;- result+coefs[[nm]]*data[[nm]]
+    }
+  }
+  result&lt;-result
+}
+
+linear_combine(data=Default,coefs = c(intercept=3,balance=0.00001,income=-0.002))
+
+
+LL_logistic&lt;- function(data,coefs,outcome) {
+  result&lt;-linear_combine(data,coefs)
+  prob&lt;- logistic(result)
+  if (outcome==TRUE){
+    pi=prob
+  } else if (outcome==FALSE){
+    pi=1-prob }
+  loglikely&lt;-sum(log(pi))
+  loglikely
+}
+LL_logistic(data=Default, coefs=c(intercept=1,income= -0.0001),outcome=Default$default==&quot;YES&quot;)</code></pre>
+<pre><code>## Warning in if (outcome == TRUE) {: the condition has length &gt; 1 and only
+## the first element will be used</code></pre>
+<pre><code>## Warning in if (outcome == FALSE) {: the condition has length &gt; 1 and only
+## the first element will be used</code></pre>
+<pre><code>## [1] -1690.164</code></pre>
+<pre class="r"><code>#best_coefs&lt;- optim(c(Default,intercept=3,income=0.002,outcome=Default$default==&quot;YES&quot;),LL_logistic,control=list(fnscale=-1))
+
+best_coefs&lt;-data.table(&quot;par&quot;=1:5,11:15)
+names(best_coefs)</code></pre>
+<pre><code>## [1] &quot;par&quot; &quot;V2&quot;</code></pre>
 </div>
 <div id="test-statements" class="section level2">
 <h2>Test statements</h2>
-<pre class="r"><code>scoreActivity::score253(1)</code></pre>
+<pre class="r"><code>scoreActivity::score253(10)</code></pre>
 <pre><code>## --------
-## Running test statements for day  01</code></pre>
-<pre><code>## Loading required package: scoreActivity</code></pre>
+## Running test statements for day  10</code></pre>
 <pre><code>## Loading required package: lazyeval</code></pre>
-<pre><code>## passed: &quot;package:mosaic&quot; %in% search()
-## passed: is.character(task2)
-## passed: grepl(&quot;^Today is&quot;, task2) &amp;&amp; grepl(&quot;201.$&quot;, task2)
-## passed: all(task3a %in% names(mosaicData::Galton))
-## passed: task3b
-## passed: task3c
-## passed: all(dim(task4) == c(2, 3))
-## passed: max(task5x) &lt;= 1 &amp;&amp; min(task5x) &gt;= 0
-## passed: max(task5y) &lt;= 1 &amp;&amp; min(task5y) &gt;= 0
-## passed: task5pi</code></pre>
+<pre><code>## Warning in if (outcome == TRUE) {: the condition has length &gt; 1 and only
+## the first element will be used</code></pre>
+<pre><code>## Warning in if (outcome == FALSE) {: the condition has length &gt; 1 and only
+## the first element will be used</code></pre>
+<pre><code>## passed: object &quot;Default&quot; exists
+## passed: object &quot;logistic&quot; exists
+## passed: logistic(0)
+## passed: logistic(2)
+## passed: linear_combine(data = Default, coef = c(intercept = 1, income = 2))[1]
+## FAILED: gives_error(linear_combine(data = Default, coef = c(intercept = 1, 
+##     whoopee = 2)))
+## passed: is.function(LL_logistic)
+## FAILED: LL_logistic(data = Default, coefs = c(intercept = 1, income = -1e-04), 
+##     outcome = Default$default == &quot;Yes&quot;)
+## passed: object &quot;best_coefs&quot; exists
+## passed: &quot;par&quot; %in% names(best_coefs)</code></pre>
 </div>
 </div>
 

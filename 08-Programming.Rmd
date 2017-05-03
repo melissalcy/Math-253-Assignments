@@ -1,10 +1,53 @@
 # In-Class Programming Activity, Day 8
+### Melissa Leong 
+### Date: 25/02/2017
 
-Your work goes here ...
+Task 1: 
+```{r}
+#1:Create a dataset with two columns "X" and "Y"
+x <- runif(100,min=20,max=70)
+y <- 5+3*x+2*rnorm(100)
+My_data <- data.frame(x,y)
 
+#2: c
+plot(My_data)
 
+#3:create function that calculates log likelyhood of observations Y
+LL_line <- function(params){
+  m<-params[1]
+  b<-params[2]
+  sigma<-params[3]
+  sum(log(dnorm(y-(m*x+b),sd=sigma)))
+}
+#4:create parameter examples
+testA <- c(3,5,2)
+testB <- c(4,1,10) 
 
-## Test statements
+#5:usually you would plot out the log likelihood, but this 3 dimensional space is hard to plot so we can use the function "optimize" instead to find the "maximum likihood" (this is what the fnscale=-1 does)
+starting_params <- c(4,1,10)
+best <- optim(starting_params,LL_line,control=list(fnscale=-1))
+best
+```
+
+Task 2:
+```{r}
+load(url("http://tiny.cc/dcf/Taxi_trips.rda"))
+names(Taxi_trips)
+#waiting_fare<- fare_amount-(base_fare+per_mile*trip_distance)
+taxi_likelihood<-function(inputs){
+  base_fare<-inputs[1]
+  per_mile<-inputs[2]
+  params<-inputs[3]
+  #dnorm(Taxi_trips$fare_amount-(base_fare+ per_mile *Taxi_trips$trip_distance),sd=params)
+  sum(log(dnorm(Taxi_trips$fare_amount-(base_fare+ per_mile *Taxi_trips$trip_distance),sd=1)))
+}
+
+start_params<- c(2,4,1/3)
+best<- optim(start_params,taxi_likelihood,control = list(fnscale=-1))
+best
+plot(Taxi_trips$fare_amount,Taxi_trips$trip_distance)
+abline(a=best$par[1],b=best$par[2])
+```
 
 ```{r}
 scoreActivity::score253(8)

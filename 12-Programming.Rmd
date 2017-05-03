@@ -1,11 +1,29 @@
 # In-Class Programming Activity, Day 12
+### Melissa Leong 
+### Date: 12/03/2017
 
-Your work goes here ...
+```{r}
+n_cases<-100 
+red_mean <- cbind(rep(1,n_cases),rep(0,n_cases))
+green_mean <- cbind(rep(0,n_cases),rep(-1,n_cases))
+blue_mean <- cbind(rep(-1,n_cases),rep(1,n_cases))
+
+covar_red<- matrix(c(3,-1.7,-1.7,1),nrow=2)
+covar_blue<- matrix(c(2,1.5,1.5,3),nrow=2)
+One<- matrix(rnorm(n_cases))
+Two<- matrix(rnorm(n_cases))
+Three<- matrix(rnorm(n_cases))
+
+x<-chol(covar_red)
+x %*% One
+Green<- Two %*% chol(covar_red)
+Blue<- Three %*% chol(covar_blue)
+
+Red<-Red+red_mean
 
 
 
 ## Test statements
 
-```{r}
 scoreActivity::score253(12)
 ```

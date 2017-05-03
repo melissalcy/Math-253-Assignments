@@ -1,9 +1,102 @@
 # In-Class Programming Activity, Day 9
+### Melissa Leong 
+### Date: 29/02/2017
 
-Your work goes here ...
+1) Calculating suits and ranks
+```{r}
+poker_deck<- c(outer((10*2:14),1:4,'+')) #outer function takes two vectors and an operation, in this case '+'
+poker_deck
+
+suits <- function(cardSet){
+  cardSet%%10
+}
+
+rank <- function(cardSet){
+  cardSet%/%10
+}
+
+suits(poker_deck)
+rank(poker_deck)
+
+#2) What kind of hand? 
+
+is_royal_flush<- function(fiveCardSet) {  
+  royalFlush<- c(10,11,12,13,14)
+  rank_list<-rank(fiveCardSet) 
+  if (royalFlush==rank_list) { 
+   return ("TRUE")
+  } else { return ("FALSE")
+  }
+}
+
+fiveCardSet<- c(101,111,121,131,141)
+is_royal_flush(fiveCardSet)
+
+is_straight_flush<- function(fiveCardSet) {
+  suitList<-suits(fiveCardSet)
+  firstRank<-rank(fiveCardSet[1])
+  `%ni%` <- Negate(`%in%`) 
+  rankList<-rank(fiveCardSet)
+    if (rankList[2]==firstRank+1 &
+    rankList[3]==firstRank+2 &
+    rankList[4]==firstRank+3 &
+    rankList[5]==firstRank+4 &
+    all (suitList== suitList)) {
+      return ("TRUE")
+    } else { return ("FALSE")
+    }
+}
+is_straight_flush(c(21, 31, 41, 51, 61))
+
+#Four of a kind 0.02% four cards of the same value (and, necessarily, different suits)
+is_four_of_a_kind<-function(cardSet){
+  suitList<-suits(cardSet)
+  rankList<-rank(fiveCardSet)
+  if (all(rankList) %in% rankList &
+  all(suitList) %!in% suitList) 
+    return ("TRUE")
+}
+
+is_flush<- function(cardSet) {
+  suitList<-suits(cardSet)
+  all(suitList) %in% suitList
+}
+
+is_straight <- function(cardSet){
+  rankList<-rank(cardSet)
+  firstRank<-rankList[1]
+  if (rankList[2]==firstRank+1 &
+    rankList[3]==firstRank+2 &
+    rankList[4]==firstRank+3 &
+    rankList[5]==firstRank+4) {
+      return ("TRUE")
+    }
+}
+
+is_pair <- function(cardSet){
+  rankList<-rank(cardSet)
+  rankList
+  if (all(rankList) %in% rankList) {
+    return ("TRUE") 
+  } else { return ("FALSE")
+  }
+}
+is_pair(c(21, 31, 41, 51, 62))
+
+is_full_house<- function(cardSet) {
+  rank_list<- rank(cardSet)
+  tab<-sort(table(rank_list))
+  if (all(tab==c(2,3))) { return("TRUE")
+    
+  } else {return ("FALSE")
+  }
+}
+
+is_full_house(c(21, 22, 31, 32, 33))
+is_full_house(c(21, 22, 31, 32, 42))
 
 
-
+```
 ## Test statements
 
 ```{r}

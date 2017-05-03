@@ -119,113 +119,144 @@ $(document).ready(function () {
 </div>
 
 
-<div id="in-class-programming-activity-day-1" class="section level1">
-<h1>In-Class Programming Activity, Day 1</h1>
+<div id="in-class-programming-activity-day-9" class="section level1">
+<h1>In-Class Programming Activity, Day 9</h1>
 <div id="melissa-leong" class="section level3">
 <h3>Melissa Leong</h3>
 </div>
-<div id="date-25012017" class="section level3">
-<h3>Date: 25/01/2017</h3>
-</div>
-<div id="section" class="section level2">
-<h2></h2>
-</div>
-<div id="section-1" class="section level2">
-<h2></h2>
-<div id="task-1" class="section level4">
-<h4>Task 1</h4>
-<pre class="r"><code>library(&quot;mosaicData&quot;)
-library(&quot;mosaic&quot;)</code></pre>
-<pre><code>## Loading required package: dplyr</code></pre>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## 
-## The 'mosaic' package masks several functions from core packages in order to add additional features.  
-## The original behavior of these functions should not be affected by this.</code></pre>
-<pre><code>## 
-## Attaching package: 'mosaic'</code></pre>
-<pre><code>## The following object is masked from 'package:Matrix':
-## 
-##     mean</code></pre>
-<pre><code>## The following objects are masked from 'package:dplyr':
-## 
-##     count, do, tally</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     binom.test, cor, cov, D, fivenum, IQR, median, prop.test,
-##     quantile, sd, t.test, var</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     max, mean, min, prod, range, sample, sum</code></pre>
-</div>
-<div id="task-2" class="section level4">
-<h4>Task 2</h4>
-<pre class="r"><code>task2= paste(&quot;Today is&quot;, date()) #paste() joins variables together
-task2</code></pre>
-<pre><code>## [1] &quot;Today is Mon May  1 21:23:37 2017&quot;</code></pre>
-</div>
-<div id="task-3" class="section level4">
-<h4>Task 3</h4>
-<pre class="r"><code>task3a=names(Galton)
-task3a</code></pre>
-<pre><code>## [1] &quot;family&quot; &quot;father&quot; &quot;mother&quot; &quot;sex&quot;    &quot;height&quot; &quot;nkids&quot;</code></pre>
-<pre class="r"><code>task3b=nrow(Galton)
-task3b </code></pre>
-<pre><code>## [1] 898</code></pre>
-<pre class="r"><code>task3c=mean(Galton$height)
-task3c</code></pre>
-<pre><code>## [1] 66.76069</code></pre>
-</div>
-<div id="task-4" class="section level4">
-<h4>Task 4</h4>
-<pre class="r"><code>task4=matrix(1:6,nrow=2,ncol=3,byrow=TRUE) #without specifying &quot;byrow=TRUE, matrix() automatically fills by column, not by row&quot;
-task4</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    2    3
-## [2,]    4    5    6</code></pre>
-</div>
-<div id="task-5" class="section level4">
-<h4>Task 5</h4>
-<pre class="r"><code>task5x=c(runif(1000,min=0,max=1)) ##runif() takes in this sequence: no. of output, min and max) 
-task5y=c(runif(1000,min=0,max=1))
-task5xx&lt;-task5x^2
-task5yy&lt;-task5y^2
-task5xy=task5xx+task5yy
+<div id="date-29022017" class="section level3">
+<h3>Date: 29/02/2017</h3>
+<ol style="list-style-type: decimal">
+<li>Calculating suits and ranks</li>
+</ol>
+<pre class="r"><code>poker_deck&lt;- c(outer((10*2:14),1:4,'+')) #outer function takes two vectors and an operation, in this case '+'
+poker_deck</code></pre>
+<pre><code>##  [1]  21  31  41  51  61  71  81  91 101 111 121 131 141  22  32  42  52
+## [18]  62  72  82  92 102 112 122 132 142  23  33  43  53  63  73  83  93
+## [35] 103 113 123 133 143  24  34  44  54  64  74  84  94 104 114 124 134
+## [52] 144</code></pre>
+<pre class="r"><code>suits &lt;- function(cardSet){
+  cardSet%%10
+}
 
-task5sqrt=sqrt(task5xy)
-task5=length(which(task5sqrt&lt;1))/1000
-task5pi=task5*4 </code></pre>
-</div>
-</div>
-<div id="section-2" class="section level2">
-<h2></h2>
+rank &lt;- function(cardSet){
+  cardSet%/%10
+}
+
+suits(poker_deck)</code></pre>
+<pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3
+## [36] 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4</code></pre>
+<pre class="r"><code>rank(poker_deck)</code></pre>
+<pre><code>##  [1]  2  3  4  5  6  7  8  9 10 11 12 13 14  2  3  4  5  6  7  8  9 10 11
+## [24] 12 13 14  2  3  4  5  6  7  8  9 10 11 12 13 14  2  3  4  5  6  7  8
+## [47]  9 10 11 12 13 14</code></pre>
+<pre class="r"><code>#2) What kind of hand? 
+
+is_royal_flush&lt;- function(fiveCardSet) {  
+  royalFlush&lt;- c(10,11,12,13,14)
+  rank_list&lt;-rank(fiveCardSet) 
+  if (royalFlush==rank_list) { 
+   return (&quot;TRUE&quot;)
+  } else { return (&quot;FALSE&quot;)
+  }
+}
+
+fiveCardSet&lt;- c(101,111,121,131,141)
+is_royal_flush(fiveCardSet)</code></pre>
+<pre><code>## Warning in if (royalFlush == rank_list) {: the condition has length &gt; 1 and
+## only the first element will be used</code></pre>
+<pre><code>## [1] &quot;TRUE&quot;</code></pre>
+<pre class="r"><code>is_straight_flush&lt;- function(fiveCardSet) {
+  suitList&lt;-suits(fiveCardSet)
+  firstRank&lt;-rank(fiveCardSet[1])
+  `%ni%` &lt;- Negate(`%in%`) 
+  rankList&lt;-rank(fiveCardSet)
+    if (rankList[2]==firstRank+1 &amp;
+    rankList[3]==firstRank+2 &amp;
+    rankList[4]==firstRank+3 &amp;
+    rankList[5]==firstRank+4 &amp;
+    all (suitList== suitList)) {
+      return (&quot;TRUE&quot;)
+    } else { return (&quot;FALSE&quot;)
+    }
+}
+is_straight_flush(c(21, 31, 41, 51, 61))</code></pre>
+<pre><code>## [1] &quot;TRUE&quot;</code></pre>
+<pre class="r"><code>#Four of a kind 0.02% four cards of the same value (and, necessarily, different suits)
+is_four_of_a_kind&lt;-function(cardSet){
+  suitList&lt;-suits(cardSet)
+  rankList&lt;-rank(fiveCardSet)
+  if (all(rankList) %in% rankList &amp;
+  all(suitList) %!in% suitList) 
+    return (&quot;TRUE&quot;)
+}
+
+is_flush&lt;- function(cardSet) {
+  suitList&lt;-suits(cardSet)
+  all(suitList) %in% suitList
+}
+
+is_straight &lt;- function(cardSet){
+  rankList&lt;-rank(cardSet)
+  firstRank&lt;-rankList[1]
+  if (rankList[2]==firstRank+1 &amp;
+    rankList[3]==firstRank+2 &amp;
+    rankList[4]==firstRank+3 &amp;
+    rankList[5]==firstRank+4) {
+      return (&quot;TRUE&quot;)
+    }
+}
+
+is_pair &lt;- function(cardSet){
+  rankList&lt;-rank(cardSet)
+  rankList
+  if (all(rankList) %in% rankList) {
+    return (&quot;TRUE&quot;) 
+  } else { return (&quot;FALSE&quot;)
+  }
+}
+is_pair(c(21, 31, 41, 51, 62))</code></pre>
+<pre><code>## Warning in all(rankList): coercing argument of type 'double' to logical</code></pre>
+<pre><code>## [1] &quot;FALSE&quot;</code></pre>
+<pre class="r"><code>is_full_house&lt;- function(cardSet) {
+  rank_list&lt;- rank(cardSet)
+  tab&lt;-sort(table(rank_list))
+  if (all(tab==c(2,3))) { return(&quot;TRUE&quot;)
+    
+  } else {return (&quot;FALSE&quot;)
+  }
+}
+
+is_full_house(c(21, 22, 31, 32, 33))</code></pre>
+<pre><code>## [1] &quot;TRUE&quot;</code></pre>
+<pre class="r"><code>is_full_house(c(21, 22, 31, 32, 42))</code></pre>
+<pre><code>## Warning in tab == c(2, 3): longer object length is not a multiple of
+## shorter object length</code></pre>
+<pre><code>## [1] &quot;FALSE&quot;</code></pre>
 </div>
 <div id="test-statements" class="section level2">
 <h2>Test statements</h2>
-<pre class="r"><code>scoreActivity::score253(1)</code></pre>
+<pre class="r"><code>scoreActivity::score253(9)</code></pre>
 <pre><code>## --------
-## Running test statements for day  01</code></pre>
+## Running test statements for day  09</code></pre>
 <pre><code>## Loading required package: scoreActivity</code></pre>
 <pre><code>## Loading required package: lazyeval</code></pre>
-<pre><code>## passed: &quot;package:mosaic&quot; %in% search()
-## passed: is.character(task2)
-## passed: grepl(&quot;^Today is&quot;, task2) &amp;&amp; grepl(&quot;201.$&quot;, task2)
-## passed: all(task3a %in% names(mosaicData::Galton))
-## passed: task3b
-## passed: task3c
-## passed: all(dim(task4) == c(2, 3))
-## passed: max(task5x) &lt;= 1 &amp;&amp; min(task5x) &gt;= 0
-## passed: max(task5y) &lt;= 1 &amp;&amp; min(task5y) &gt;= 0
-## passed: task5pi</code></pre>
+<pre><code>## Warning in all(rankList): coercing argument of type 'double' to logical
+
+## Warning in all(rankList): coercing argument of type 'double' to logical</code></pre>
+<pre><code>## Warning in all(suitList): coercing argument of type 'double' to logical</code></pre>
+<pre><code>## Warning in tab == c(2, 3): longer object length is not a multiple of
+## shorter object length</code></pre>
+<pre><code>## ERROR when running  check(TRUE, is.function(ranks))
+## passed: is.function(suits)
+## FAILED: is_pair(c(21, 22, 33, 41, 52))
+## passed: is_pair(c(21, 31, 41, 51, 62))
+## passed: is_flush(c(21, 31, 41, 51, 71))
+## passed: is_full_house(c(21, 22, 31, 32, 33))
+## passed: is_full_house(c(21, 22, 31, 32, 42))
+## passed: is_straight(c(21, 31, 42, 52, 62))
+## FAILED: is_straight_flush(c(21, 31, 42, 52, 62))
+## passed: is_straight_flush(c(21, 31, 41, 51, 61))</code></pre>
 </div>
 </div>
 

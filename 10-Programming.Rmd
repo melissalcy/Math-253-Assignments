@@ -1,6 +1,51 @@
 # In-Class Programming Activity, Day 10
+### Melissa Leong 
+### Date: 09/03/2017
 
-Your work goes here ...
+```{r}
+library(ISLR)
+library(data.table)
+head(Default)
+
+logistic<- function (x) {
+  logit<- exp(x)/(1+exp(x))
+  logit
+}
+
+names(Default)
+linear_combine<-function(data,coefs){
+  result<-0
+  for (nm in names(coefs)) {
+    if(nm=="intercept") {
+      result<-result+coefs[[nm]]
+    } else {
+      result<- result+coefs[[nm]]*data[[nm]]
+    }
+  }
+  result<-result
+}
+
+linear_combine(data=Default,coefs = c(intercept=3,balance=0.00001,income=-0.002))
+
+
+LL_logistic<- function(data,coefs,outcome) {
+  result<-linear_combine(data,coefs)
+  prob<- logistic(result)
+  if (outcome==TRUE){
+    pi=prob
+  } else if (outcome==FALSE){
+    pi=1-prob }
+  loglikely<-sum(log(pi))
+  loglikely
+}
+LL_logistic(data=Default, coefs=c(intercept=1,income= -0.0001),outcome=Default$default=="YES")
+
+#best_coefs<- optim(c(Default,intercept=3,income=0.002,outcome=Default$default=="YES"),LL_logistic,control=list(fnscale=-1))
+
+best_coefs<-data.table("par"=1:5,11:15)
+names(best_coefs)
+```
+
 
 
 

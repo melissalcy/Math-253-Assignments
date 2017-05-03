@@ -1,11 +1,33 @@
 # In-Class Programming Activity, Day 11
+### Melissa Leong 
+### Date: 09/03/2017
 
-Your work goes here ...
+```{r}
+Sigma<-matrix(c(1,-0.7,-0.7,1),nrow=2)
+Sigma_inv<-solve(Sigma)
+test_inverse<-Sigma %*%Sigma_inv
+test_inverse
+A<-chol(Sigma)
+x<-A %*%t(A)
+
+x1<-rnorm(10)
+x2<-rnorm(10)
+X<-cbind(x1,x2)
+matX<-t(X) %*% X
 
 
+w1<-rnorm(10000)
+w2<-rnorm(10000)
+W<-cbind(w1,w2)
+W_cov<-t(W) %*% W
+
+A_inv<-chol(solve(Sigma))
+Y<-X %*% A
+Y<- W %*%A
+plot(Y[,1],Y[,2],col=rgb(0,0,0,.05))
+```
 
 ## Test statements
-
 ```{r}
 scoreActivity::score253(11)
 ```

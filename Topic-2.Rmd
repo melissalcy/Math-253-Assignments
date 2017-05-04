@@ -1,2 +1,144 @@
 # Topic 2 Exercises: Linear Regression
 
+#####Textbook Excercise 3.6
+```{r}
+library(MASS)
+library(ISLR)
+#View(Boston)
+head(Boston)
+names(Boston)
+?Boston
+
+#Simple Linear Regression:
+lm.fit=lm(medv~lstat,data=Boston)
+attach(Boston)
+lm.fit=lm(medv~lstat)
+summary(lm.fit)
+names(lm.fit)
+confint(lm.fit)
+predict(lm.fit,data.frame(lstat=(c(5,10,15))),interval="confidence") #Produces confidence intervals
+predict(lm.fit,data.frame(lstat=(c(5,10,15))),interval="confidence") #Produces a preduction interval. THey are similiar but the prediction interval is substantially wider 
+
+plot(lstat,medv)
+abline(lm.fit,col="green",lwd=3)
+par(mfrow=c(2,2)) #par() function, which tells R to split the par() display screen into separate panels so that multiple plots can be viewed simultaneously.
+plot(lm.fit)
+resids<-rstudent(lm.fit)
+plot(predict(lm.fit),resids)
+which.max(hatvalues(lm.fit)) #identifies the observations with the largest leverage statistic
+
+#3.6.3
+lm.fit=lm(medv~lstat+age,data=Boston)
+summary(lm.fit)
+
+lm.fit=lm(medv~.,data=Boston) #~. is the shorthand to include all the predictors 
+summary(lm.fit)
+library(car)
+vif(lm.fit)
+lm.fit1=lm(medv~.-age,data=Boston) #removes the predictor"age" from the regression
+
+#3.6.4
+summary(lm(medv~lstat*age,data=Boston)) #to include interaction terms 
+
+#3.6.5
+lm.fit2=lm(medv~lstat+I(lstat^2)) # For instance, given a predictor X, we can create a predictor X2 using I(X^2). The function I() is needed since the ^ has a special meaning I() in a formula; wrapping as we do allows the standard usage in R, which is to raise X to the power 2
+summary(lm.fit2)
+lm.fit=lm(medv~lstat)
+anova(lm.fit,lm.fit2) #This anova test proves that lm.fit2 is better than lm.fit 
+par(mfrow=c(2,2))
+plot(lm.fit2)
+lm.fit5=lm(medv~poly(lstat ,5))
+summary (lm(medv~log(rm),data=Boston))
+
+#3.6.6
+View(Carseats)
+head(Carseats)
+lm.fit=lm(Sales~.+Income:Advertising+Price:Age,data=Carseats)
+contrasts(Carseats$ShelveLoc) #There is a  categorical variables
+
+```
+
+
+####Problem 13 in ISL 3.7.13.
+```{r}
+x<- rnorm(100,0,1)
+eps<-rnorm(100,0,sqrt(0.25))
+y=-1+(0.5*x)+eps
+length(y)
+```
+######C: Beta 0 is -1 and Beta 1 is 0.5
+```{r}
+plot(x~y)
+```
+
+
+######D: The relationship between x and y is positive
+```{r}
+lm.fit<-lm(y~x)
+summary(lm.fit)
+```
+#####E: Beta 0 is -0.98 and Beta 1 is 0.51. The OLS model's prediction of beta is almost the same as the values of the linear model.  
+ 
+
+#####F:
+```{r}
+plot(x~y)
+abline(lm.fit,col="green")
+```
+#####G:
+```{r}
+lm.fit2<-lm(y~x+I(x^2))
+summary(lm.fit)
+summary(lm.fit2)
+anova(lm.fit,lm.fit2)
+```
+
+#####An ANOVA test fails to reject the null hypothesis (Null Hyp:The linear model is not statistically inferior to the polynomial model) There is no statistically significant evidence that shows that the quadratic term improves model fit 
+
+#####H:Less noise
+```{r}
+xLessNoise<- rnorm(100,0,1)
+epsLessNoise<-rnorm(100,0,sqrt(0.1))
+yLessNoise=-1+(0.5*xLessNoise)+epsLessNoise
+length(yLessNoise)
+lm.fitLessNoise<-lm(yLessNoise~xLessNoise)
+summary(lm.fitLessNoise)
+plot(xLessNoise~yLessNoise)
+abline(lm.fitLessNoise,col="pink")
+lm.fit2LessNoise<-lm(yLessNoise~xLessNoise+I(xLessNoise^2))
+summary(lm.fitLessNoise)
+summary(lm.fit2LessNoise)
+anova(lm.fitLessNoise,lm.fit2LessNoise)
+
+```
+
+#####I:More noise
+```{r}
+xMoreNoise<- rnorm(100,0,1)
+epsMoreNoise<-rnorm(100,0,sqrt(0.5))
+yMoreNoise=-1+(0.5*xMoreNoise)+epsMoreNoise
+length(yMoreNoise)
+lm.fitMoreNoise<-lm(yMoreNoise~xMoreNoise)
+summary(lm.fitMoreNoise)
+plot(xMoreNoise~yMoreNoise)
+abline(lm.fitMoreNoise,col="pink")
+lm.fit2MoreNoise<-lm(yMoreNoise~xMoreNoise+I(xMoreNoise^2))
+summary(lm.fitMoreNoise)
+summary(lm.fit2MoreNoise)
+anova(lm.fitMoreNoise,lm.fit2MoreNoise)
+```
+#####J:
+```{r}
+confint(lm.fit)
+confint(lm.fitLessNoise)
+confint(lm.fitMoreNoise)
+
+```
+
+####Theory
+#####On p. 66 the authors state, “This is clearly not true in Fig. 3.1” Explain why.
+
+
+
+#####On p. 77 the authors state, “In this case we cannot even fit the multiple regression models using least squares ….” Explain why.
+ISL 3.7.3 and 3.7.4.

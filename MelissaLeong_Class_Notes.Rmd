@@ -28,3 +28,32 @@ melissa_new_function(1)
 melissa_new_function(2)
 melissa_new_function(3)
 ```
+
+######How to make fuctions
+```{r}
+vscale<-function(a,v){
+  a*v
+}
+vscale(2,c(2,1.7,10,212))
+vcsale
+```
+
+```{r}
+#Make a loop to take a random set of numbers and sum them up
+set_of_numbers <- rnorm(10)
+state <- 0 #this creates a storage space
+for (num in set_of_numbers) {
+  state<-state+num
+}
+
+state
+
+TV<-runif(500)
+range(TV)
+sales <- 3.5+12*TV+(3*TV+0.75)*rnorm(length(TV))
+print(sales)
+
+head(sales)
+range(sales)
+lm(sales~TV)
+```

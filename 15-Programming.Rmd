@@ -1,9 +1,43 @@
 # In-Class Programming Activity, Day 15
+### Melissa Leong 
 
-Your work goes here ...
+```{r}
+#download.file("http://tiny.cc/dcf/mona.rda", destfile = 'mona.rda')
+load('mona.rda')
 
+X<- t(mona) - mean(mona[]) #t() is the transpose operator
+X_rand <-matrix(rnorm(ncol(X)*nrow(X), 0, 1), ncol = ncol(X), nrow = nrow(X))
+X_corr<- X_rand %*% chol(var(X))
 
+numbers <- rep(0, 175)
+beta <- sample(c(numbers, sample(c(2,5,-3,-4), 16, replace = TRUE)))
+Y_pure<- X %*% beta
+Y_real <- X %*% beta + rnorm(nrow(X), mean=0 , sd=sqrt(0.10*var(Y_pure))) #The end component is some noise
 
+lm <- lm(Y_pure ~ X - 1)
+beta_hat_pure = coef(lm)
+lm2 <- lm(Y_real ~ X - 1)
+beta_hat_real = coef(lm2)
+
+library(glmnet)
+lasso_mod <- cv.glmnet(X, Y_real, alpha=1)
+beta_lasso <- predict(lasso_mod, type = "coefficients", s = lasso_mod$lambda.min)
+
+singVal <- svd(X)$d
+r2SingVal = cumsum(singVal^2)/sum(singVal^2)
+
+singVal_rand = svd(X_rand)$d
+singVal_corr = svd(X_corr)$d
+
+r2SingVal1 = cumsum(singVal_rand^2)/sum(singVal_rand^2)
+r2SingVal2 = cumsum(singVal_corr^2)/sum(singVal_corr^2)
+
+plot(r2SingVal ~ singVal_rand[1:191])
+
+n99 = sum(r2SingVal<0.99)
+n99_rand = sum(r2SingVal1<0.99)
+n99_corr = sum(r2SingVal2<0.99)
+```
 ## Test statements
 
 ```{r}

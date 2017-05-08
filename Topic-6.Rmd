@@ -1,2 +1,55 @@
 # Topic 6 Exercises: Selecting Model Terms
+##Name: Melissa Leong
+
+### 6.8.9
+
+```{r}
+library(ISLR)
+data(College)
+set.seed(11)
+
+trainData = sample(1:dim(College)[1], dim(College)[1] / 2)
+testData = (-trainData)
+College.trainData = College[trainData, ]
+College.testData = College[testData, ]
+
+#b) Fit a linear model using least squares on trainData set, and report testData error obtained.
+lm.fit= lm(Apps ~ ., data = College.trainData)
+lm.pred = predict(lm.fit, College.testData)
+mean((lm.pred - College.testData$Apps)^2)
+```
+
+
+```{r}
+#c) Fit a ridge regression model
+library(glmnet)
+trainData.mat = model.matrix(Apps ~ ., data = College.trainData)
+testData.mat = model.matrix(Apps ~ ., data = College.testData)
+grid = 10 ^ seq(4, -2, length = 100)
+ridge.mod = glmnet(trainData.mat, College.trainData$Apps, alpha = 0, lambda = grid, thresh = 1e-12)
+ridge.cv = cv.glmnet(trainData.mat, College.trainData$Apps, alpha = 0, lambda = grid, thresh = 1e-12)
+bestlam.ridge = ridge.cv$lambda.min
+bestlam.ridge
+ridge.pred = predict(ridge.mod, s = bestlam.ridge, newx = testData.mat)
+mean((ridge.pred - College.testData$Apps)^2)
+```
+
+
+
+```{r}
+#d) Fit a lasso model on trainData set
+lasso.mod = glmnet(trainData.mat, College.trainData$Apps, alpha = 1, lambda = grid, thresh = 1e-12)
+lasso.cv = cv.glmnet(trainData.mat, College.trainData$Apps, alpha = 1, lambda = grid, thresh = 1e-12)
+bestlam.lasso = lasso.cv$lambda.min
+bestlam.lasso
+
+lasso.pred = predict(lasso.mod, s = bestlam.lasso, newx = testData.mat)
+mean((lasso.pred - College.testData$Apps)^2)
+```
+
+```{r}
+lasso.out = glmnet(model.matrix(Apps~., data=College),College$Apps, alpha=1, lambda = grid)
+lasso.coef = predict(lasso.out, s=bestlam.lasso, type="coefficients")[1:19,]
+lasso.coef
+```
 

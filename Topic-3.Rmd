@@ -1,2 +1,3 @@
 # Topic 3 Exercises: Likelihood
 
+#Topic assignment: there are no exercises from the textbook, so … finish the exponential likelihood and taxicab in-class activities.

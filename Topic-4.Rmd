@@ -1,2 +1,94 @@
 # Topic 4 Exercises: Classification
 
+```{r}
+library(ISLR)
+attach(Auto)
+mpg01 <- rep(0, length(mpg), data=Auto)
+mpg01[mpg > median(mpg)] <- 1
+Auto <- data.frame(Auto, mpg01)
+```
+###b. Exploring Data Graphically
+```{r}
+boxplot(cylinders ~ mpg01, data = Auto, main = "Cylinders vs mpg01")
+boxplot(horsepower ~ mpg01, data = Auto, main = "Horsepower vs mpg01")
+boxplot(weight ~ mpg01, data = Auto, main = "Weight vs mpg01")
+boxplot(acceleration ~ mpg01, data = Auto, main = "Acceleration vs mpg01")
+
+```
+###C
+```{r}
+train <- (year %% 2 == 0)
+trainingData <- Auto[train, ]
+testingData <- Auto[!train, ]
+mpg01_testing <- mpg01[!train]
+```
+
+###D
+```{r}
+library(MASS)
+lda_mod <- lda(mpg01 ~ cylinders + weight + displacement + horsepower, data = Auto, subset = train)
+pred_lda<-predict(lda_mod, data=testingData)
+mean(pred_lda$class != mpg01_testing)
+```
+
+###E
+```{r}
+qda_mod <- qda(mpg01 ~ cylinders + weight + displacement + horsepower, data = Auto, subset = train)
+pred_qda<-predict(qda_mod, data=testingData)
+mean(pred_qda$class != mpg01_testing)
+```
+###F
+```{r}
+glm_mod <- glm(mpg01 ~ cylinders + weight + displacement + horsepower, data = Auto, family = binomial, subset = train)
+summary(glm_mod)
+prob_glm <- predict(glm_mod, testingData, type = "response")
+pred_glm <- rep(0, length(prob_glm))
+pred_glm[prob_glm > 0.5] <- 1
+mean(pred_glm != mpg01_testing)
+```
+
+###G
+```{r}
+library(class)
+trainKnn <- cbind(cylinders, weight, displacement, horsepower)[train, ]
+testing_knn <- cbind(cylinders, weight, displacement, horsepower)[!train, ]
+training_mpg01 <- mpg01[train]
+set.seed(1)
+
+pred_knn <- knn(trainKnn, testing_knn, training_mpg01, k = 1)
+mean(pred_knn != mpg01_testing)
+
+prediction_knn<-function(training = trainKnn,testing = testing_knn, training_var = training_mpg01, k, testing_var = mpg01_testing){
+  knn_val<-knn(trainKnn,testing_knn,training_mpg01, k)
+  mean_error<-mean(knn_val != mpg01_testing)
+  return(mean_error)
+}
+prediction_knn(k=1)
+prediction_knn(k=10)
+prediction_knn(k=20)
+prediction_knn(k=40)
+prediction_knn(k=60)
+prediction_knn(k=80)
+prediction_knn(k=120)
+prediction_knn(k=140)
+prediction_knn(k=30)
+prediction_knn(k=35)
+prediction_knn(k=25)
+```
+
+
+##Theory Assignment: 4.7.1
+```{r}
+#Q8. Suppose that we take a data set, divide it into equally-sized training and test sets, and the try out two different classification procedures. First we use logistic regression and get an error rate of 20% on the training data and 30% on the test data. Next we use 1-nearest neighbors (i.e. K=1) and get an average error rate (averaged over both test and training data sets) of 18%. Based on these results, which method should we prefer to use for classification of new observations? Why?
+
+#Use the logistic regression because it has the smaller test out error rate
+```
+##Theory Assignment: 4.7.9
+```{r}
+
+#(a) On average, what fraction of people with an odds of 0.37 of defaulting on their credit card payment will in fact default?
+0.370/(1+0.370)
+
+#(b) Suppose that an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?
+0.16/(1-0.16)
+```

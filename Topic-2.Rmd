@@ -51,7 +51,7 @@ lm.fit5=lm(medv~poly(lstat ,5))
 summary (lm(medv~log(rm),data=Boston))
 
 #3.6.6
-View(Carseats)
+#View(Carseats)
 head(Carseats)
 lm.fit=lm(Sales~.+Income:Advertising+Price:Age,data=Carseats)
 contrasts(Carseats$ShelveLoc) #There is a  categorical variables
@@ -138,7 +138,10 @@ confint(lm.fitMoreNoise)
 ####Theory
 #####On p. 66 the authors state, “This is clearly not true in Fig. 3.1” Explain why.
 
+For these formulas to be strictly valid, we need to assume that the errors ϵiϵi for each observation are uncorrelated with common variance  σ2
 
 
 #####On p. 77 the authors state, “In this case we cannot even fit the multiple regression models using least squares ….” Explain why.
 ISL 3.7.3 and 3.7.4.
+
+When there are more coefficients than cases, there will be an infinity of different solutions with zero residuals. 

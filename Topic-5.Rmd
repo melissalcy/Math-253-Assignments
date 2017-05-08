@@ -1,2 +1,6 @@
 # Topic 5 Exercises: Cross-Validation
 
+
+```{r}
+#No Assignment for this Topic
+```
